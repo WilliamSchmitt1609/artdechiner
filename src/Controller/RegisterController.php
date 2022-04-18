@@ -33,15 +33,14 @@ class RegisterController extends AbstractController
             $hashedPassword = $hasher->hashPassword(
                 $user,
                 $plaintextPassword
-
             );
             $password = $user->setPassword($hashedPassword) ;
 
             $entityManager->persist($user);
             $entityManager->flush();
-        }    
+        }
 
-    
+        
         return $this->renderForm('register/index.html.twig', [
             'form' => $form,
         ]);
