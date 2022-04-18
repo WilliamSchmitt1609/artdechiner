@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Art de chiner - Gestion de votre compte{% endblock %}
+
+{% block content %}
+
+
+    <h1>Mon compte utilisateur</h1>
+
+    Bonjour {{app.user.firstname}} ! Vous pouvez modifier votre compte en toute sécurité.
+    <hr>
+    <a href="{{ path('app_account_password') }}">Modifier mon mot de passe</a>
+
+{% endblock %}

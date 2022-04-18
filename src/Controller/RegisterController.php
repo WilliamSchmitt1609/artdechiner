@@ -28,19 +28,20 @@ class RegisterController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()){
 
             $user = $form->getData();
+
             $plaintextPassword = $user->getPassword();
             $hashedPassword = $hasher->hashPassword(
                 $user,
                 $plaintextPassword
-            );
 
+            );
             $password = $user->setPassword($hashedPassword) ;
 
             $entityManager->persist($user);
             $entityManager->flush();
-        }
+        }    
 
-        
+    
         return $this->renderForm('register/index.html.twig', [
             'form' => $form,
         ]);
