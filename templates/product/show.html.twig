@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Art de chiner - Votre article{% endblock %}
+
+{% block content %}
+<div class="col-md-4">
+    <div class="product-item text-center">
+        <img src="/uploads/{{ product.picture }}" alt="{{ product.name }}" class="img-fluid">
+        <h5>{{ product.name }}</h5>
+        <span class="product-subtitle">{{product.subtitle}}</span>
+        <span class="product-price">{{ product.price }}</span>
+    </div>    
+</div>     
+{% endblock %}
