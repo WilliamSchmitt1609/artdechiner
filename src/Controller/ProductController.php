@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Product;
+use App\Entity\Category;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,17 +24,23 @@ class ProductController extends AbstractController
     public function index(): Response
     {
         $productsList = $this->em->getRepository(Product::class)->findAll();
+        $categoriesList = $this->em->getRepository(Category::class)->findAll();
         
         return $this->render('product/index.html.twig', [
-            'productsList' => $productsList
+            'productsList' => $productsList,
+            'categoriesList' =>$categoriesList
         ]);
     }
 
-    #[Route('/nos-objets/{slug}', name: 'app_product')]
+    #[Route('/objet/{slug}', name: 'app_product')]
     public function show($slug)
     {
         $product = $this->em->getRepository(Product::class)->findOneBy(['slug' => $slug
     ]);
+
+        if(!$product){
+            return $this->redirectToRoute('app_products');
+        }
 
         return $this->render('product/show.html.twig', [
             'slug' => $slug ,
