@@ -1,20 +1,65 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CartController!{% endblock %}
+{% block title %}Mon panier - Art de chiner{% endblock %}
 
-{% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+{% block content %}
+<h1>Mon panier</h1>
+<p>Récapitulatif de votre commande</p> 
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+{% if cart|length > 0 %}
+<table class="table mt-3">
+    <thead>
+      <tr>
+        <th scope="col">Produits</th>
+        <th scope="col"></th>
+        <th scope="col">Quantité</th>
+        <th scope="col">Prix</th>
+        <th scope="col">Total</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+    {% set total = null %}
+    {% for item in cart %}
+    
+      <tr>
+        <th><img src="/uploads/{{ item.product.picture }}" alt="{{ item.product.name }}" height="65px" width = "65px"><br></th>
+        <td scope="row">{{item.product.name }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>{{ (item.product.price  /100) |number_format (2) }} €</td>
+        <td>{{ (item.product.price * item.quantity  /100) |number_format (2) }} €</td>
+        <td>
+            <a href="{{ path('add_product_to_cart', {id: item.product.id} ) }}">
+                <img src="{{ asset('assets/img/add-to-cart.png') }}" height="30px" alt="Ajouter un produit">
+            </a>
+        </td>
+        <td>
+            <a href="{{ path('delete_one_product_to_cart', {id: item.product.id} ) }}">
+                <img src="{{ asset('assets/img/remove-from-cart.png') }}" height="30px" alt="Supprimer un produit">
+            </a>
+        </td>
+        <td>
+            <a href="{{ path('delete_product_to_cart', {id: item.product.id} ) }}">
+                <img src="{{ asset('assets/img/trash-can.png') }}" height="30px" alt="Supprimer un produit">
+            </a>
+            </td>
+        
+      </tr>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/wilso/Documents/art_de_chiner/art_de_chiner/src/Controller/CartController.php'|file_link(0) }}">src/Controller/CartController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/wilso/Documents/art_de_chiner/art_de_chiner/templates/cart/index.html.twig'|file_link(0) }}">templates/cart/index.html.twig</a></code></li>
-    </ul>
-</div>
+      {% set total = total + (item.product.price * item.quantity) %}
+    {% endfor %}
+    </tbody>
+  </table>
+  <div class="text-right">
+<hr>
+    <b>Quantité produits:</b> {{ cart|length }} <br>
+    <b>Prix total: </b> {{ (total /100) |number_format (2)}} €<br>
+    <a href="" class="btn btn-success mt-3">Validez votre commande</a>
+  </div>
+  {% else %}
+  <hr>
+  <p class="empty-cart">Votre panier est vide</p>
+  {% endif %}
 {% endblock %}

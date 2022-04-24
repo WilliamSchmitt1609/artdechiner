@@ -16,11 +16,7 @@ class Search
      * @var Category[]
      */
     public $categories = [];
-/*
-    public function __toString()
-    {
-        return $this->string;
-    }*/
+
 
 
 }

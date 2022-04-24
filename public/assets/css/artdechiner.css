@@ -8,6 +8,14 @@ body {
     position: relative;
 }
 
+header {
+    background-color: #6495ED;
+}
+
+.text-right{
+    margin-bottom: 100px;
+}
+
 .footer-custom{
     text-align: center;
     bottom: 0;
@@ -37,8 +45,14 @@ body {
     text-transform: uppercase;
     font-size: 15px;
     margin-bottom: 1px;
+}
 
- 
+.empty-cart{
+    font-weight: bold;
+}
+
+.shopping-cart{
+    height: 30px;
 }
 
 .product-item .product-subtitle{

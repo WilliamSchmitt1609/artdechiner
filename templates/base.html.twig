@@ -33,7 +33,7 @@
 </head>
 <body>
 <header>
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-info">
         <a class="navbar-brand" href="{{ path('app_home') }}">Art de Chiner</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -56,6 +56,9 @@
             {% else %}
             <a class="navbar-brand" href="{{ path('app_login') }}">Connexion</a> | <a class="navbar-brand" href="{{ path('app_register') }}">Inscription</a>
             {% endif %}
+            <a href="{{ path('app_cart') }}">
+                <img src="{{ asset('assets/img/shopping-cart.png') }}" class="shopping-cart" alt="Votre panier">
+            </a>
             </div>
         </div>
     </nav>
