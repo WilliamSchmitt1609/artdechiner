@@ -7,11 +7,9 @@
 
 <div class="row">
     <div class="col-md-2">
-        <h2>Catégories</h2> 
-        {% for category in categoriesList %}
-        <a href="{{ path('app_category', {'id':category.id} ) }}">{{ category.name }}</a>
-        <br>
-        {% endfor %}      
+        <h2>Votre recherche</h2>
+        {{ form(form) }}
+
     </div>
     <div class="col-md-10">
         <h2>Nos objets anciens</h2>

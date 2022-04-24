@@ -2,11 +2,12 @@
 
 namespace App\Repository;
 
+use App\Class\Search;
 use App\Entity\Product;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
+use Doctrine\ORM\OptimisticLockException;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method Product|null find($id, $lockMode = null, $lockVersion = null)
@@ -53,7 +54,32 @@ class ProductRepository extends ServiceEntityRepository
 
         $queryBuilder = $this->createQueryBuilder('p');
         $queryBuilder->select('COUNT(p.id) as value');
+        
         return $queryBuilder->getQuery()->getOneOrNullResult();
+    }
+
+    /**
+     * Get the research results
+     */
+    public function findBySearch(Search $search){
+
+        $queryBuilder = $this->createQueryBuilder('p');
+        $queryBuilder->select('c', 'p')
+                     ->join('p.category', 'c');
+                     
+        if(!empty($search->categories)){
+            $queryBuilder = $queryBuilder
+                ->andWhere('c.id In (:categories)')
+                ->setParameter('categories', $search->categories);
+        }
+
+        if(!empty($search->string)){
+            $queryBuilder = $queryBuilder
+                ->andWhere('p.name LIKE :string')
+                ->setParameter('string', "%{$search->string}%");
+        }
+
+        return $queryBuilder->getQuery()->getResult();
     }
     // /**
     //  * @return Product[] Returns an array of Product objects
