@@ -4,11 +4,32 @@
 
 {% block content %}
 
-
+    <a href="{{ path('app_new_address') }}" class="btn btn-primary float-right">Ajouter une adresse</a>
     <h1>Adresses enregistrées</h1>
 
+
     Bonjour {{app.user.firstname}} ! Voici les adresses que vous avez enregistrées.
+    <br>
     <a href="{{ path('app_account') }}">Retourner à Mon Compte</a>
     <hr>
+    {% if app.user.addresses|length == 0 %}
+        <p>Aucune adresse n'a été renseignée</p>
+    {% else %}
+        <div class="row">
+        {% for address in app.user.addresses %}
+            <div class="col-md-4">
+                <div class="card" style="width: 18rem;">
+                    <img src="..." class="card-img-top" alt="...">
+                    <div class="card-body">
+                    <h5 class="card-title">{{ address.name }}</h5>
+                    <p class="card-text">{{ address.address }}</p>
+                    <a href="#" class="btn btn-primary">Acceder</a>
+                    </div>
+                </div> 
+        </div>        
+        {% endfor %}
+        </div>
+    {% endif %}
+    
 
 {% endblock %}
