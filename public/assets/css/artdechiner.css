@@ -69,3 +69,23 @@ header {
 .product-price{
     font-weight: bold;
 }
+
+.login-block{
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.form-check{
+    padding: 20px 60px;
+    margin-top: 7px;
+}
+
+.col-form-label{
+    font-weight: bold;
+
+}
+
+.order-summary{
+    padding: 20px;
+    margin-top: 20px;
+}

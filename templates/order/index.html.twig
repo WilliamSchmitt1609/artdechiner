@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Ma commande{% endblock %}
+
+{% block content %}
+<h2>Passez votre commande</h2>
+<p>Vos préférences</p>
+<hr>
+<div class="row">
+    <div class="col-md-6">
+      
+        {% set formHtml %}
+            {{form(form)}}
+        {% endset %}
+
+        {{ formHtml|replace({'[br]' : '<br/>'})|raw  }}
+    </div>
+    
+    <div class="col-md-6">
+        <div class="text-center">
+            <b>Récapitulatif</b><br>
+        </div>
+        <div class="order-summary">
+            {% for key,item in cart %}
+            <div class="row">
+                <div class="col-2"><img src="/uploads/{{ item.product.picture }}" alt="{{ item.product.name }}" height="65px" width = "65px"></div>
+                <div class="col-8 my-auto">{{item.product.name}}</div>
+                <div class="col-2 my-auto">x {{ item.quantity }}</div>
+            </div>
+            {% endfor %}
+            <b>Paiement</b>
+        </div>
+    </div>
+</div>
+{% endblock %}

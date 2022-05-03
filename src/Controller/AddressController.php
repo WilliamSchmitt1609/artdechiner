@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Class\Cart;
 use App\Entity\Address;
 use App\Form\AddressType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -25,7 +26,7 @@ class AddressController extends AbstractController
     }
 
     #[Route('account/add/address', name: 'app_new_address')]
-    public function add(Request $request): Response
+    public function add(Cart $cart, Request $request): Response
     {
         $address = new Address;
         
@@ -37,11 +38,53 @@ class AddressController extends AbstractController
 
             $this->em->persist($address);
             $this->em->flush();
+            if($cart->get()){
+                return $this->redirectToRoute('app_order');
+            } else {
+            return $this->redirectToRoute('app_address');
+            }
+        }
+
+        return $this->render('address/add.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+
+
+    #[Route('account/update/address/{id}', name: 'app_edit_address')]
+    public function update(Request $request, $id): Response
+    {
+        $address = $this->em->getRepository(Address::class)->find($id);
+
+        if(!$address || $address->getUser() != $this->getUser()) {
+            return $this->redirectToRoute('app_address');
+        }
+        
+        $form = $this->createForm(AddressType::class, $address);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()){
+            $this->em->flush();
             return $this->redirectToRoute('app_address');
         }
 
         return $this->render('address/add.html.twig', [
             'form' => $form->createView()
         ]);
+    }
+
+
+    #[Route('account/delete/address/{id}', name: 'app_delete_address')]
+    public function delete($id): Response
+    {
+        $address = $this->em->getRepository(Address::class)->find($id);
+
+        if($address || $address->getUser() == $this->getUser()) {
+            $this->em->remove($address);
+            $this->em->flush();
+        }
+        
+         return $this->redirectToRoute('app_address');
+        
     }
 }

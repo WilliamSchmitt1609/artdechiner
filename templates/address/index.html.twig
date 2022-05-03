@@ -21,9 +21,12 @@
                 <div class="card" style="width: 18rem;">
                     <img src="..." class="card-img-top" alt="...">
                     <div class="card-body">
-                    <h5 class="card-title">{{ address.name }}</h5>
-                    <p class="card-text">{{ address.address }}</p>
-                    <a href="#" class="btn btn-primary">Acceder</a>
+                        <h5 class="card-title">{{ address.name }}</h5>
+                        <p class="card-text">
+                            {{ address.address }}, <br>
+                            {{ address.postalcode }} {{ address.city }} {{ address.country }}
+                        </p>
+                        <a href="{{ path('app_edit_address', {'id': address.id}) }}" class="btn btn-primary btn-sm">Modifier</a> <a href="{{ path('app_delete_address', {'id': address.id}) }}" class="btn btn-danger btn-sm">supprimer</a>
                     </div>
                 </div> 
         </div>        
